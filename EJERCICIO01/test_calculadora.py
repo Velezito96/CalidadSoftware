@@ -1,83 +1,63 @@
-import pytest
-from prueba_1_codigo import sumar, restar, multiplicar, dividir
+import unittest
+from Calculadora import sumar, restar, multiplicar, dividir
 
+class TestCalculadora(unittest.TestCase):
 
-@pytest.mark.parametrize("a, b, resultado", [
-    (2, 3, 5),
-    (-1, -1, -2),
-    (0, 0, 0),
-    (100, 200, 300)
-])
-def test_sumar(a, b, resultado):
-    assert sumar(a, b) == resultado
+    def test_sumar(self):
+        self.assertEqual(sumar(2, 3), 5)
+        self.assertEqual(sumar(-1, -1), -2)
+        self.assertEqual(sumar(0, 0), 0)
+        self.assertEqual(sumar(100, 200), 300)
 
+    def test_sumar_error(self):
+        with self.assertRaises(ValueError):
+            sumar('a', 2)
+        with self.assertRaises(ValueError):
+            sumar(2, 'b')
+        with self.assertRaises(ValueError):
+            sumar('a', 'b')
 
-@pytest.mark.parametrize("a, b", [
-    ('a', 2),
-    (2, 'b'),
-    ('a', 'b')
-])
-def test_sumar_error(a, b):
-    with pytest.raises(ValueError):
-        sumar(a, b)
+    def test_restar(self):
+        self.assertEqual(restar(100, 50), 50)
 
+    def test_restar_error(self):
+        with self.assertRaises(ValueError):
+            restar('a', 2)
+        with self.assertRaises(ValueError):
+            restar(2, 'b')
+        with self.assertRaises(ValueError):
+            restar('a', 'b')
 
-@pytest.mark.parametrize("a, b, resultado", [
+    def test_multiplicar(self):
+        self.assertEqual(multiplicar(2, 3), 6)
+        self.assertEqual(multiplicar(-1, -1), 1)
+        self.assertEqual(multiplicar(0, 1), 0)
+        self.assertEqual(multiplicar(5, 5), 25)
 
-    (100, 50, 50)
-])
-def test_restar(a, b, resultado):
-    assert restar(a, b) == resultado
+    def test_multiplicar_error(self):
+        with self.assertRaises(ValueError):
+            multiplicar('a', 2)
+        with self.assertRaises(ValueError):
+            multiplicar(2, 'b')
+        with self.assertRaises(ValueError):
+            multiplicar('a', 'b')
 
+    def test_dividir(self):
+        self.assertEqual(dividir(6, 3), 2)
+        self.assertEqual(dividir(10, 2), 5)
+        self.assertEqual(dividir(0, 1), 0)
 
-@pytest.mark.parametrize("a, b", [
-    ('a', 2),
-    (2, 'b'),
-    ('a', 'b')
-])
-def test_restar_error(a, b):
-    with pytest.raises(ValueError):
-        restar(a, b)
+    def test_dividir_error(self):
+        with self.assertRaises(ValueError):
+            dividir(4, 0)
+        with self.assertRaises(ValueError):
+            dividir('a', 2)
+        with self.assertRaises(ValueError):
+            dividir(4, 'b')
+        with self.assertRaises(ValueError):
+            dividir('a', 'b')
+        with self.assertRaises(ValueError):
+            dividir(-10, -2)
 
-
-@pytest.mark.parametrize("a, b, resultado", [
-    (2, 3, 6),
-    (-1, -1, 1),
-    (0, 1, 0),
-    (5, 5, 25)
-])
-def test_multiplicar(a, b, resultado):
-    assert multiplicar(a, b) == resultado
-
-
-@pytest.mark.parametrize("a, b", [
-    ('a', 2),
-    (2, 'b'),
-    ('a', 'b')
-])
-def test_multiplicar_error(a, b):
-    with pytest.raises(ValueError):
-        multiplicar(a, b)
-
-
-@pytest.mark.parametrize("a, b, resultado", [
-    (6, 3, 2),
-    (10, 2, 5),
-    (0, 1, 0)
-])
-def test_dividir(a, b, resultado):
-    assert dividir(a, b) == resultado
-
-
-@pytest.mark.parametrize("a, b", [
-    (4, 0),
-    ('a', 2),
-    (4, 'b'),
-    ('a', 'b'),
-    (-10, -2)
-
-])
-
-def test_dividir_error(a, b):
-    with pytest.raises(ValueError):
-        dividir(a, b)
+if __name__ == "__main__":
+    unittest.main()
